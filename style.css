@@ -1,0 +1,712 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  max-width: 1920px;
+  font-family: “Times New Roman”, “游明朝”, “Yu Mincho”, “游明朝体”, “YuMincho”, “ヒラギノ明朝 Pro W3”, “Hiragino Mincho Pro”, “HiraMinProN-W3”, “HGS明朝E”, “ＭＳ Ｐ明朝”, “MS PMincho”, serif;
+  color: #333;
+}
+
+.wrap {
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: absolute;
+  height: 80px;
+  max-width: 1920px;
+  color: #fff;
+  z-index: 10;
+  /* ヘッダー固定 */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  transition: all .5s;
+}
+
+.header.change-color {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.header__left {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 152px;
+}
+
+.header__logo {
+  display: flex;
+  min-width: 200px;
+  height: 40px;
+  margin-left: 20px;
+}
+
+.header__left__img {
+  width: 40px;
+  height: 40px;
+  padding-right: 15px;
+}
+
+h1 {
+  padding: 0 90px 0 0;
+  line-height: 40px;
+}
+
+h1 a {
+  text-decoration: none;
+  color: #fff;
+}
+
+nav {
+  height: 48px;
+  line-height: 48px;
+}
+
+.header__nav {
+  display: flex;
+}
+
+.header__nav__list {
+  list-style: none;
+  padding: 0 0 0 30px;
+}
+
+.header__nav__list__link {
+  color: #fff;
+  text-decoration: none;
+}
+
+.header__right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 170px;
+  height: 54px;
+  background-color: #978F10;
+  margin-right: 20px;
+}
+
+.header__right__img {
+  padding: 0 10px 0 0;
+}
+
+#menu {
+  display: none;
+}
+
+#menu.hide {
+  opacity: 0;
+  /* アイコンをクリック後、透明にする */
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background: rgba(255, 255, 255, 0.9);
+  z-index: 11;
+  text-align: center;
+  padding: 64px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .6s;
+}
+
+.overlay li {
+  margin-top: 10px;
+  list-style: none;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .3s, transform .3s;
+}
+
+.overlay.show li {
+  opacity: 1;
+  transform: none;
+}
+
+.overlay a {
+  text-decoration: none;
+  color: #333;
+}
+
+.overlay.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#tojiru {
+  position: absolute;
+  top: 20px;
+  right: 35px;
+  font-size: 32px;
+  cursor: pointer;
+}
+
+
+/* fv ズームしてふわっと表示 */
+@keyframes zoomUp {
+  0% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(1.15);
+  }
+}
+
+.swiper-slide-active .slide-img,
+.swiper-slide-duplicate-active .slide-img,
+.swiper-slide-prev .slide-img {
+  animation: zoomUp 10s linear 0s 1 normal both;
+}
+/* imgタグだと下に隙間ができるのでblockに。 */
+.slide-img img {
+  display: block;
+}
+
+
+.slide-img {
+  height: 1080px;
+  max-width: 1920px;
+  /* 最大幅 */
+  min-width: 375px;
+  /* 最小幅 */
+}
+
+
+
+.swiper-container {
+  z-index: 1;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+.fv__inner {
+  position: absolute;
+  top: 362px;
+  right: 508px;
+  writing-mode: vertical-rl;
+  font-size: 34px;
+  line-height: 1.2;
+  margin-left: auto;
+  letter-spacing: 10px;
+  z-index: 3;
+  color: #fff;
+}
+
+.fv__inner__text2 {
+  display: block;
+  margin-right: 51px;
+}
+
+
+/* モーダル */
+#modal {
+  background: #fff;
+  width: 550px;
+  height: 600px;
+  padding: 29px 0 0 0;
+  position: absolute;
+  top: 242px;
+  right: 0;
+  left: 0;
+  margin: 0 auto;
+  transition: transform 0.7s;
+  z-index: 2;
+}
+
+#mask.hidden {
+  display: none;
+}
+
+#modal.hidden {
+  transform: translate(0, -900px);
+}
+
+.modal__title {
+  font-size: 20px;
+  line-height: 1.7;
+  padding: 0 0 30px 0;
+  border-bottom: 1px solid #E7E7E7;
+  margin: 0 0 22px 0;
+  text-align: center;
+}
+
+#mask {
+  background: rgba(255, 255, 255, 0.4);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 1;
+}
+
+#open {
+  cursor: pointer;
+  color: #fff;
+}
+
+#close {
+  position: absolute;
+  top: 20px;
+  right: 22px;
+  cursor: pointer;
+}
+
+
+#submit {
+  cursor: pointer;
+  width: 198px;
+  border: 1px solid #707070;
+  text-align: center;
+  font-size: 16px;
+  line-height: 42px;
+  height: 42px;
+  margin: 0 auto;
+}
+
+form {
+  width: 430px;
+  margin: 0 auto;
+}
+
+input {
+  width: 100%;
+}
+
+label {
+  font-size: 16px;
+  line-height: 1.7;
+  padding: 9px 0 9px 0;
+  display: inline-block;
+}
+
+.modal__name__text,
+.modal__email__text,
+.modal__plan__text,
+.flatpickr {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #797878;
+  padding: 4px 0 4px 10px;
+  border: 1px solid #E7E7E7;
+}
+
+.flatpickr {
+  margin: 0 0 73px 0;
+}
+
+
+
+
+.section1 {
+  background-image: url(img/haikei.png);
+  width: 1920px;
+  height: 681px;
+}
+
+.section1__wrap {
+  height: 681px;
+  width: 1180px;
+  margin: 0 auto;
+  writing-mode: vertical-rl;
+}
+
+
+.title__top1 {
+  padding: 64px 80px 0 19px;
+  font-size: 28px;
+  line-height: 1.5;
+  display: inline-block;
+  letter-spacing: 10px;
+}
+
+.title__top2 {
+  padding: 149px 0 0 108px;
+  font-size: 28px;
+  line-height: 1.5;
+  display: inline-block;
+  letter-spacing: 10px;
+}
+
+
+.text {
+  padding: 149px 0 0 112px;
+  font-size: 16px;
+  line-height: 2;
+  letter-spacing: 5px;
+}
+
+.name {
+  padding: 443px 0 0 0;
+  font-size: 22px;
+  line-height: 1.5;
+  letter-spacing: 10px;
+}
+
+.about {
+  width: 1920px;
+}
+
+.about__wrap {
+  display: flex;
+
+}
+
+.about__img__1,
+.about__img__2,
+.about__img__3 {
+  height: 545px;
+  width: 1050px;
+}
+
+.about__img__1 {
+  padding-top: 106px;
+}
+
+.about__wrap:nth-child(2) {
+  flex-direction: row-reverse;
+  display: flex;
+}
+
+.about__content__1 {
+  padding: 138px 0 0 137px;
+}
+
+h2 {
+  font-size: 36px;
+  line-height: 1.7;
+  padding-bottom: 54px;
+}
+
+.about__text {
+  font-size: 16px;
+  line-height: 2;
+  padding-bottom: 67px;
+}
+
+.about__btn {
+  display: inline-block;
+  padding: 20px 40px;
+  border: 1px solid #707070;
+}
+
+.about__btn>a {
+
+  color: #333;
+  text-decoration: none;
+}
+
+.about__img__2 {
+  padding-top: 122px;
+}
+
+.about__content__2 {
+  padding: 175px 210px 0 0;
+}
+
+.about__img__3 {
+  padding: 122px 0 78px;
+}
+
+.about__content__3 {
+  padding: 154px 0 0 137px;
+}
+
+
+.plan {
+  background-image: url(img/bg02.png);
+  background-size: cover;
+  height: 775px;
+  padding-top: 60px;
+}
+
+.plan__title {
+  text-align: center;
+}
+
+.plan__title__img {
+  padding-bottom: 7px;
+}
+
+.plan__menu {
+  display: flex;
+  justify-content: center;
+}
+
+.plan__menu__list {
+  padding: 0 47px;
+}
+
+.plan__menu__img {
+  width: 331px;
+  height: 209px;
+  padding: 0 0 32px 0;
+}
+
+.plan__menu__list__text1 {
+  font-size: 20px;
+  line-height: 1.6;
+  padding-bottom: 22px;
+}
+
+.plan__menu__list__text2 {
+  font-size: 16px;
+  line-height: 2;
+}
+
+.news {
+  height: 757px;
+  padding: 60px 364px 60px 370px;
+
+}
+
+.news__title__wrap {
+  text-align: center;
+}
+
+.news__title__img {
+  padding-bottom: 7px;
+}
+
+.news__title {
+  font-size: 36px;
+  padding-bottom: 38px;
+}
+
+.news__title__text__wrap {
+  display: flex;
+  justify-content: center;
+}
+
+.news__title__text1 {
+  font-size: 16px;
+  /* border-bottom: 1px solid #707070; */
+  vertical-align: bottom;
+  /* margin-left: -20px; */
+}
+
+.news__title__text2 {
+  font-size: 16px;
+  margin-left: 50px;
+}
+
+.news__title__text__container {
+  margin: 0 auto;
+  width: 500px;
+}
+
+.menu {
+  list-style: none;
+}
+
+.news__title__text {
+  color: #333;
+  display: inline-block;
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 4px 4px 0 0;
+}
+
+
+li.active {
+  background: #F6F6F6;
+  border-radius: 4px 4px 0 0;
+}
+
+.menu li a:not(.active):hover {
+  opacity: 0.5;
+  transition: opacity 0.4s;
+}
+
+.menu li a.active {
+  background: #F6F6F6;
+  color: #333;
+
+}
+
+.content.active {
+  width: 500px;
+  background-color: #F6F6F6;
+  margin: 0 auto;
+  display: block;
+  min-height: 50px;
+  padding: 12px;
+  display: block;
+}
+
+
+.content {
+  display: none;
+  background-color: #F6F6F6;
+  text-align: left;
+}
+
+.news__img__wrap {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 1180px;
+  margin-top: 30px;
+}
+
+.news__img__contents {
+  background-color: #F6F6F6;
+  display: flex;
+  width: 565px;
+  height: 130px;
+  margin: 10px 0;
+}
+
+.news__img {
+  width: 103px;
+  height: 100px;
+  padding: 15px 30px 15px 10px;
+}
+
+.news__img__text__wrap {
+  padding: 15px;
+}
+
+/* javaタブ */
+
+/* javaタブ */
+
+
+
+.access {
+  width: 1920px;
+  background-image: url(img/bg.png);
+  background-size: cover;
+  padding: 60px 0 110px 0;
+}
+
+.access__title__wrap {
+  text-align: center;
+}
+
+
+.access__img__wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.access__title__img {
+  padding-bottom: 20px;
+}
+
+.access__img {
+  width: 656px;
+  height: 370px;
+  padding-right: 83px;
+}
+
+.access__title {
+  font-size: 36px;
+  padding-bottom: 84px;
+}
+
+.access__img__text {
+  font-size: 16px;
+  line-height: 2;
+}
+
+.access__img__text>p {
+  padding-bottom: 8px;
+}
+
+.gmap {
+  width: 792px;
+  margin: 0 auto;
+  padding-top: 69px;
+}
+
+iframe {
+  height: 592px;
+  width: 792px;
+}
+
+.info {
+  padding: 64px 0 61px 0;
+  background-image: url(img/bg3.png);
+}
+
+.info__menu {
+  writing-mode: vertical-rl;
+  width: 160px;
+  margin: 0 auto;
+}
+
+.info__menu__list {
+  list-style: none;
+}
+
+.info__menu__list__link {
+  color: #333;
+  text-decoration: none;
+  font-size: 18px;
+  line-height: 1.8;
+  letter-spacing: 15px;
+  padding: 0 10px 96px 10px;
+  display: inline-block;
+}
+
+
+.info__title__wrap {
+  text-align: center;
+}
+
+.info__title {
+  letter-spacing: 5px;
+}
+
+.info__title>a {
+  text-decoration: none;
+  color: #333;
+}
+
+.info__address {
+  text-align: center;
+}
+
+.info__address__text {
+  font-size: 16px;
+  line-height: 3;
+}
+
+.info__address__text__inner {
+  padding-right: 20px;
+}
+
+footer {
+  width: 1920px;
+  height: 60px;
+  background-color: black;
+  color: #fff;
+  font-size: 12px;
+  line-height: 2;
+  line-height: 60px;
+  text-align: center;
+  align-items: center;
+}
+
+footer>a {
+  text-decoration: none;
+  color: #fff;
+}
